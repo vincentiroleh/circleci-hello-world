@@ -25,7 +25,7 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - attach_workspace:
-          at: ~/output.txt
+          at: ~/
       - checkout
       - run:
           name: "print content of the persisted file"
