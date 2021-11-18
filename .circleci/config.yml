@@ -26,12 +26,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-      - checkout
-      - run:
-          name: "print content of the persisted file"
-          command: |
-            ls \
-            cat ~/output.txt
+      - run: cat ~/output.txt
 
 
 # Invoke jobs via workflows
