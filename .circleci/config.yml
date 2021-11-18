@@ -5,55 +5,38 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-    steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
-  
-  print_hello:
+ 
+  save_hello_world_output:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo hello"
-
-  print_world:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - checkout
-      - run:
-          name: "Say world"
-          command: "echo world"
-  
-  say_my_name:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - checkout
-      - run:
-          name: "echo an env var that is part of our project"
+          name: "output hello world to a file called output.txt"
           command: |
-            echo $MY_ENV_VAR
+            echo "Hello World" > output.txt
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - target/application.jar
+            - build/*
+  
+  print_out_file:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - checkout
+      - run:
+          name: "print content of the persisted file"
+          command: |
+            cat output.txt
+
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  test-dev:
     jobs:
-      - say-hello
-      - print_hello
-      - print_world:
-          requires:
-            - print_hello
-      - say_my_name
+      - save_hello_world_output
