@@ -30,6 +30,7 @@ jobs:
       - run:
           name: "print content of the persisted file"
           command: |
+            ls \
             cat ~/output.txt
 
 
