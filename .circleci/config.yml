@@ -40,3 +40,4 @@ workflows:
   test-dev:
     jobs:
       - save_hello_world_output
+      - print_out_file
