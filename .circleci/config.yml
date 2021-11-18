@@ -43,7 +43,7 @@ jobs:
       - checkout
       - run:
           name: "echo an env var that is part of our project"
-          command: "echo $MY_NAME"
+          command: "echo $MY_NAME \ echo $MY_SCHOOL"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
