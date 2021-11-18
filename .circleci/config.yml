@@ -14,24 +14,23 @@ jobs:
       - run:
           name: "output hello world to a file called output.txt"
           command: |
-            echo "Hello World" > output.txt
+            echo "Hello World" > ~/output.txt
       - persist_to_workspace:
-          root: /tmp/workspace
+          root: ~/
           paths:
-            - target/application.jar
-            - build/*
+            - output.txt
   
   print_out_file:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: ~/output.txt
       - checkout
       - run:
           name: "print content of the persisted file"
           command: |
-            cat output.txt
+            cat ~/output.txt
 
 
 # Invoke jobs via workflows
