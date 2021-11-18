@@ -1,39 +1,18 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+commands:
+  print_pipeline_id:
+    steps:
+      - run: echo ${CIRCLE_WORKFLOW_ID}
+
 jobs:
- 
-  save_hello_world_output:
+  my_job:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - run:
-          name: "output hello world to a file called output.txt"
-          command: |
-            echo "Hello World" > ~/output.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - output.txt
-  
-  print_out_file:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run: cat ~/output.txt && ls
+      - print_pipeline_id
 
-
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  test-dev:
+  my_workflow:
     jobs:
-      - save_hello_world_output
-      - print_out_file:
-          requires:
-            - save_hello_world_output
+      - my_job
