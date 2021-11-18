@@ -10,7 +10,6 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - checkout
       - run:
           name: "output hello world to a file called output.txt"
           command: |
@@ -35,4 +34,6 @@ workflows:
   test-dev:
     jobs:
       - save_hello_world_output
-      - print_out_file
+      - print_out_file:
+          requires:
+            - save_hello_world_output
