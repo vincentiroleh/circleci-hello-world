@@ -16,7 +16,11 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - print_pipeline_id:
-          to: "Print other stuff"
+          to: 134
+      - run: 
+          name: When something fails
+          command: echo "Something failed"
+          when: on_fail
 
 workflows:
   my_workflow:
