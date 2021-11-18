@@ -2,8 +2,13 @@ version: 2.1
 
 commands:
   print_pipeline_id:
+    description: "Print Circle workflow id"
+    parameters:
+      to:
+        type: string
+        default: ${CIRCLE_WORKFLOW_ID}
     steps:
-      - run: echo ${CIRCLE_WORKFLOW_ID}
+      - run: echo << parameters.to >>
 
 jobs:
   my_job:
