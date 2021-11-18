@@ -16,10 +16,11 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - print_pipeline_id:
-          to: 134
+          to: "134"
+      - run: exit 1
       - run: 
           name: When something fails
-          command: echo "Something failed"
+          command: echo "Something failed that is why we are here"
           when: on_fail
 
 workflows:
